@@ -1,4 +1,4 @@
-python==3.9
+
 
 
 blinker==1.6.2
