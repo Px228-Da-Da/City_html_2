@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<style>
+  .product-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .product-wrap {
+    width: 300px;
+    text-align: center;
+    background: white;
+    margin: 10px;
+    border-radius: 12px;
+  }
+
+  .product-image {
+    position: relative;
+  }
+
+  .product-image a {
+    display: block;
+  }
+
+  .product-image img {
+    display: block;
+    width: 100%;
+  }
+
+  .shadow {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .1);
+    opacity: 0;
+    transition: 0.5s ease-in-out;
+  }
+
+  .product-wrap:hover .shadow {
+    opacity: 1;
+  }
+
+  .actions {
+    bottom: 15px;
+    right: 15px;
+    position: absolute;
+  }
+
+  .add-to-cart {
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(0, -50px);
+    transition: 1s ease-in-out;
+  }
+
+  .actions a {
+    background: #202020;
+    color: white;
+    display: block;
+    height: 36px;
+    line-height: 36px;
+    width: 42px;
+    transition: .3s ease-in-out;
+    text-decoration: none;
+  }
+
+  .add-to-cart-button:before {
+    content: "\f07a";
+  }
+
+  .add-to-wishlist-button:before {
+    content: "\f004";
+  }
+
+  .add-to-compare-button:before {
+    content: "\f079";
+  }
+
+  .quikview-button:before {
+    content: "\f002";
+  }
+
+  .actions a:hover {
+    background: #67BFA6;
+  }
+
+  .product-wrap:hover .add-to-cart {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(0, 0);
+  }
+
+  .add-to-wishlist {
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(0, -50px);
+    transition: .8s ease-in-out;
+    margin: 9px 0 0;
+  }
+
+  .product-wrap:hover .add-to-wishlist,
+  .product-wrap:hover .add-to-compare,
+  .product-wrap:hover .quikview {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(0, 0);
+  }
+
+  .add-to-compare {
+    opacity: 0;
+    position: relative;
+    visibility: hidden;
+    transition: .6s ease-in-out;
+    transform: translate(0, -50px);
+    margin: 9px 0 0;
+  }
+
+  .quikview {
+    opacity: 0;
+    visibility: hidden;
+    transition: .4s ease-in-out;
+    transform: translate(0, -50px);
+    margin: 9px 0 0;
+  }
+
+  .product-list {
+    margin-top: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+    font-family: 'Open Sans', serif;
+  }
+
+  .product-list h3 {
+    color: #555;
+    font-size: 15px;
+    font-family: 'Open Sans', serif;
+  }
+
+  .price {
+    font-weight: bold;
+    font-size: 16px;
+    color: #ff7659;
+  }
+</style>
+
+<h1 class="text-secondary">Home</h1>
+<!-- <p>&#128075; Welcome to my piece of the web!</p> -->
+
+<!-- Форма пошуку -->
+<form method="GET" action="{{ url_for('search') }}">
+  <input type="text" name="query" placeholder="Пошук товару..." required>
+  <button type="submit">Шукати</button>
+</form>
+
+<div class="product-container">
+  {% for product in products %}
+  <div class="product-wrap">
+    <div class="product-image">
+      <a href="#"><img src="{{ product.image }}" alt="{{ product.name }}"></a>
+      <div class="shadow"></div>
+      <div class="actions">
+        <div class="actions-btn">
+          <div class="add-to-cart">
+            <a class="add-to-cart-button" href="#" title="Добавить в корзину"></a>
+          </div>
+          <div class="add-to-links">
+            <div class="add-to-wishlist">
+              <a class="add-to-wishlist-button" href="#" title="Добавить в мои желания"></a>
+            </div>
+            <div class="quikview">
+              <a class="quikview-button" href="#" title="Быстрый просмотр"></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="product-list">
+      <h3>{{ product.name }}</h3>
+      <div class="price">{{ product.price }} грн</div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

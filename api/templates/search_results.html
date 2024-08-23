@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Результати пошуку{% endblock %}
+
+{% block content %}
+<h1>Результати пошуку</h1>
+{% if products %}
+  <div class="row">
+    {% for product in products %}
+      <div class="col-md-4">
+        <div class="product-wrap">
+          <div class="product-image">
+            <a href="#"><img src="{{ product['image'] }}" alt="{{ product['name'] }}"></a>
+          </div>
+          <div class="product-list">
+            <h3>{{ product['name'] }}</h3>
+            <div class="price">{{ product['price'] }}</div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p>Нічого не знайдено за запитом "{{ request.args.get('q') }}"</p>
+{% endif %}
+{% endblock %}
